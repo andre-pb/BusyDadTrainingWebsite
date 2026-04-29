@@ -164,14 +164,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(246, 245, 242, 0.75);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(246, 245, 242, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
   border-bottom: 1px solid transparent;
-  transition: background 0.25s ease, border-color 0.25s ease;
+  transition: background 0.25s ease, backdrop-filter 0.25s ease, border-color 0.25s ease;
 }
 .site-header.is-scrolled {
-  background: rgba(246, 245, 242, 0.4);
+  background: rgba(246, 245, 242, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom-color: var(--rule);
 }
 .site-logo { display: inline-flex; align-items: center; }
@@ -217,8 +219,10 @@ body {
 
 .menu-toggle {
   display: none;
-  width: 40px; height: 40px;
+  width: 44px; height: 44px;
   align-items: center; justify-content: center;
+  position: relative;
+  z-index: 60;
 }
 .menu-toggle span {
   display: block;
@@ -238,6 +242,7 @@ body {
   .nav {
     position: fixed;
     inset: 64px 0 auto 0;
+    z-index: 55;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
@@ -245,10 +250,19 @@ body {
     background: rgba(246, 245, 242, 0.98);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--rule);
-    transform: translateY(-110%);
-    transition: transform 0.28s ease;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0.22s;
   }
-  .nav.is-open { transform: translateY(0); }
+  .nav.is-open {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s;
+  }
   .nav a {
     padding: 0.85rem 0;
     border-bottom: 1px solid var(--rule);
